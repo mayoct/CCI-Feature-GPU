@@ -6,13 +6,20 @@ jobs:
       resource_class: gpu.nvidia.small
       image: ubuntu-2004-cuda-11.4:202110-01
     steps:
-      run:
-        name: Check GPU status
-        command: nvidia-smi
+      -  run:
+          name: Check GPU status
+          command: nvidia-smi
   train_to_test_on_runner:
     machine: true
-      resource_class: mayoct/runner-rog
+    resource_class: mayoct/runner-rog
     steps:
-      run:
-        name: Check GPU status
-        command: nvidia-smi
+      - run:
+          name: Check GPU status
+          command: nvidia-smi
+
+workflows:
+  version: 2
+  workflow:
+    jobs:
+      - train_to_test_on_gpu
+      - train_to_test_on_runner
