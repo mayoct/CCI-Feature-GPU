@@ -15,7 +15,7 @@ jobs:
     steps:
       - run:
           name: Check GPU status
-          command: nvidia-smi
+          command: /usr/lib/wsl/lib/nvidia-smi
 
 workflows:
   version: 2
