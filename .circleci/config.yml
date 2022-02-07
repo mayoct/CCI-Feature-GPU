@@ -38,6 +38,8 @@ commands:
         type: string
     steps:
       - run:
+          command: sudo apt install zip
+      - run:
           name: Train with MaskDataSet
           command: |
             cd yolov5
@@ -52,6 +54,8 @@ commands:
       test_env:
         type: string
     steps:
+      - run:
+          command: sudo apt install zip
       - run:
           name: Test mask detection
           command: |
