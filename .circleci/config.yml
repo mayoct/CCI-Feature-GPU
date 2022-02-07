@@ -56,9 +56,9 @@ commands:
           name: Test mask detection
           command: |
             cd yolov5
-            python detect.py --weights ./runs/train/exp/weights/best.pt --img 640 --conf 0.25 --source ../images/face_w_mask3.jpg
-            python detect.py --weights ./runs/train/exp/weights/best.pt --img 640 --conf 0.25 --source ../images/face_w_mask4.jpg
-            python detect.py --weights ./runs/train/exp/weights/best.pt --img 640 --conf 0.25 --source ../images/face_wo_mask2.jpg
+            python detect.py --weights ./runs/train/exp/weights/best.pt --img 640 --conf 0.2 --source ../images/face_w_mask3.jpg
+            python detect.py --weights ./runs/train/exp/weights/best.pt --img 640 --conf 0.2 --source ../images/face_w_mask4.jpg
+            python detect.py --weights ./runs/train/exp/weights/best.pt --img 640 --conf 0.2 --source ../images/face_wo_mask2.jpg
             zip -r runs/detect-result.zip runs/detect
       - store_artifacts:
           path: yolov5/runs/detect-result.zip
@@ -78,6 +78,8 @@ jobs:
       - load_maskdataset
       - train_with_maskdataset:
           train_env: "gpu"
+      - test_mask_detection:
+          test_env: "gpu"
 
   train_to_test_on_runner:
     machine: true
@@ -98,5 +100,5 @@ workflows:
   version: 2
   workflow:
     jobs:
-#      - train_to_test_on_gpu
-      - train_to_test_on_runner
+      - train_to_test_on_gpu
+#      - train_to_test_on_runner
