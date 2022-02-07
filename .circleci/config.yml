@@ -2,25 +2,24 @@ version: 2.1
 
 commands:
   clone_yolov5:
-    description: Clone YOLOv5 from github
     steps:
       - run:
           name: Clone YOLOv5 from github
           command: |
             git clone http://github.com/ultralytics/yolov5
   load_maskdataset:
-    description: xxx
     steps:
       - run:
           name: Set up MaskDataSet from ROBOFLOW (needs registration)
           command: |
             mkdir MaskDataSet
             cd MaskDataSet
-            curl -L "https://public.roboflow.com/ds/ufHXPvJekp?key=$ROBOFLOW_KEY" > roboflow.zip; unzip roboflow.zip; rm roboflow.zip
+            curl -L "https://public.roboflow.com/ds/ufHXPvJekp?key=$ROBOFLOW_KEY" > roboflow.zip
+            unzip roboflow.zip
+            rm roboflow.zip
             \cp -fv  ../data.yaml .
             cd ..          
   train_with_maskdataset:
-    description: xxx
     parameters:
       train_env:
         type: string
