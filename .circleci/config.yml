@@ -10,9 +10,10 @@ commands:
       - restore_cache:
           key: yolov5-requirements-{{ .Branch }}-{{ checksum "yolov5/requirements.txt" }}
       - run:
-          name: Load required pip libraries
+          name: Load PyTorch 1.10.2 and required pip libraries
           command: |          
             cd yolov5
+            pip3 install torch==1.10.2+cu113 torchvision==0.11.3+cu113 torchaudio==0.10.2+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
             pip install -r requirements.txt
             cd ..
       - save_cache:
