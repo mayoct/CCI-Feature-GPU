@@ -14,7 +14,6 @@ commands:
           command: |          
             cd yolov5
             pip3 install torch==1.10.2+cu113 torchvision==0.11.3+cu113 torchaudio==0.10.2+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
-            pip3 install 
             pip3 install -r requirements.txt
             cd ..
 #      - save_cache:
@@ -42,7 +41,7 @@ commands:
           name: Train with MaskDataSet
           command: |
             cd yolov5
-            python train.py --img 416 --data ../MaskDataSet/data.yaml --cfg yolov5s.yaml --weights yolov5s.pt --batch-size 6 --epochs 100
+            python3 train.py --img 416 --data ../MaskDataSet/data.yaml --cfg yolov5s.yaml --weights yolov5s.pt --batch-size 6 --epochs 100
             zip -r runs/train-result.zip runs/train/exp/weights
             cd ..
       - store_artifacts:
@@ -57,9 +56,9 @@ commands:
           name: Test mask detection
           command: |
             cd yolov5
-            python detect.py --weights ./runs/train/exp/weights/best.pt --img 640 --conf 0.2 --source ../images/face_w_mask3.jpg
-            python detect.py --weights ./runs/train/exp/weights/best.pt --img 640 --conf 0.2 --source ../images/face_w_mask4.jpg
-            python detect.py --weights ./runs/train/exp/weights/best.pt --img 640 --conf 0.2 --source ../images/face_wo_mask2.jpg
+            python3 detect.py --weights ./runs/train/exp/weights/best.pt --img 640 --conf 0.2 --source ../images/face_w_mask3.jpg
+            python3 detect.py --weights ./runs/train/exp/weights/best.pt --img 640 --conf 0.2 --source ../images/face_w_mask4.jpg
+            python3 detect.py --weights ./runs/train/exp/weights/best.pt --img 640 --conf 0.2 --source ../images/face_wo_mask2.jpg
             zip -r runs/detect-result.zip runs/detect
       - store_artifacts:
           path: yolov5/runs/detect-result.zip
@@ -77,7 +76,7 @@ jobs:
           command: nvidia-smi
       - run:
           name: Install Python3 environment
-          command: sudo apt-get install python-is-python3 python3-pip pip3
+          command: sudo apt-get install python3-pip
       - clone_yolov5
       - load_maskdataset
       - train_with_maskdataset:
