@@ -1,21 +1,67 @@
 version: 2.1
 
+comands:
+  clone_yolov5:
+    description: Clone YOLOv5 from github
+    steps:
+      run:
+        name: Clone YOLOv5 from github
+        command: |
+          git clone https://github.com/ultralytics/yolov5
+  load_maskdataset:
+    description: xxx
+    steps:
+      run:
+        name: Set up MaskDataSet from ROBOFLOW (needs registration)
+        command: |
+          mkdir MaskDataSet
+          cd MaskDataSet
+          curl -L "https://public.roboflow.com/ds/ufHXPvJekp?key=$ROBOFLOW_KEY" > roboflow.zip; unzip roboflow.zip; rm roboflow.zip
+          cp ../MaskDataSet/data.yaml .
+          cd ..          
+  train_with_maskdataset:
+    descritpion: xxx
+    parameters:
+      train_env:
+        type: string
+    steps:
+      run:
+        name: Train with MaskDataSet
+        command: |
+          cd yolov5
+          python train.py --img 416 --data ../MaskDataSet/data.yaml --cfg yolov5s.yaml --weights yolov5s.pt --batch-size 2 --epochs 300
+          cd ..
+      store_artifacts:
+        path: yolov5/runs/result.zip
+        destination: result_on_<< parameters.train_env >>.zip
+
 jobs:
   train_to_test_on_gpu:
     machine:
       resource_class: gpu.nvidia.small
       image: ubuntu-2004-cuda-11.4:202110-01
     steps:
-      -  run:
+      - checkout
+      - run:
           name: Check GPU status
           command: nvidia-smi
+      - clone_yolov5
+      - load_maskdataset
+      - train_with_maskdataset:
+          train_env: "gpu"
+
   train_to_test_on_runner:
     machine: true
     resource_class: mayoct/runner-rog
     steps:
+      - checkout
       - run:
           name: Check GPU status
           command: /usr/lib/wsl/lib/nvidia-smi
+      - clone_yolov5
+      - load_maskdataset
+      - train_with_maskdataset:
+          train_env: "runner"
 
 workflows:
   version: 2
