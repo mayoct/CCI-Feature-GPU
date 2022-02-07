@@ -17,7 +17,7 @@ commands:
             mkdir MaskDataSet
             cd MaskDataSet
             curl -L "https://public.roboflow.com/ds/ufHXPvJekp?key=$ROBOFLOW_KEY" > roboflow.zip; unzip roboflow.zip; rm roboflow.zip
-            cp ../MaskDataSet/data.yaml .
+            cp ../data.yaml .
             cd ..          
   train_with_maskdataset:
     description: xxx
