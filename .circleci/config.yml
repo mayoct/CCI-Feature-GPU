@@ -7,6 +7,8 @@ commands:
           name: Clone YOLOv5 from github
           command: |
             git clone http://github.com/ultralytics/yolov5
+            cd yolov5
+            pip install -r requirements.txt
   load_maskdataset:
     steps:
       - run:
