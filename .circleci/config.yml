@@ -41,7 +41,7 @@ commands:
           name: Train with MaskDataSet
           command: |
             cd yolov5
-            python3 train.py --img 416 --data ../MaskDataSet/data.yaml --cfg yolov5s.yaml --weights yolov5s.pt --batch-size 6 --epochs 100
+            python3 train.py --img 416 --data ../MaskDataSet/data.yaml --cfg yolov5s.yaml --weights yolov5s.pt --batch-size 6 --epochs 150
             zip -r runs/train-result.zip runs/train/exp/weights
             cd ..
       - store_artifacts:
@@ -74,9 +74,6 @@ jobs:
       - run:
           name: Check GPU status
           command: nvidia-smi
-      - run:
-          name: Install Python3 environment
-          command: sudo apt-get install python3-pip
       - clone_yolov5
       - load_maskdataset
       - train_with_maskdataset:
@@ -104,4 +101,4 @@ workflows:
   workflow:
     jobs:
       - train_to_test_on_gpu
-#      - train_to_test_on_runner
+      - train_to_test_on_runner
