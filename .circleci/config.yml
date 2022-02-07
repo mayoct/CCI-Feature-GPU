@@ -7,8 +7,18 @@ commands:
           name: Clone YOLOv5 from github
           command: |
             git clone http://github.com/ultralytics/yolov5
+      - restore_cache:
+          key: yolov5-requirements-{{ .Branch }}-{{ checksum "yolov5/requirements.txt" }}
+      - run:
+          name: Load required pip libraries
+          command: |          
             cd yolov5
             pip install -r requirements.txt
+            cd ..
+      - save_cache:
+          key: yolov5-requirements-{{ .Branch }}-{{ checksum "yolov5/requirements.txt" }}
+          paths:
+            - "~/.cache/pip"                
   load_maskdataset:
     steps:
       - run:
