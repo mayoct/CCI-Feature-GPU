@@ -42,10 +42,27 @@ commands:
           command: |
             cd yolov5
             python train.py --img 416 --data ../MaskDataSet/data.yaml --cfg yolov5s.yaml --weights yolov5s.pt --batch-size 2 --epochs 300
+            zip -r runs/train-result.zip runs/train/exp/weights
             cd ..
       - store_artifacts:
-          path: yolov5/runs/result.zip
-          destination: result_on_<< parameters.train_env >>.zip
+          path: yolov5/runs/train-result.zip
+          destination: train-result_on_<< parameters.train_env >>.zip
+  test_mask_detection:
+    parameters:
+      test_env:
+        type: string
+    steps:
+      - run:
+          name: Test mask detection
+          command: |
+            cd yolov5
+            python detect.py --weights ./runs/train/exp/weights/best.pt --img 640 --conf 0.25 --source ../images/face_w_mask3.jpeg
+            python detect.py --weights ./runs/train/exp/weights/best.pt --img 640 --conf 0.25 --source ../images/face_w_mask4.jpeg
+            python detect.py --weights ./runs/train/exp/weights/best.pt --img 640 --conf 0.25 --source ../images/face_wo_mask2.jpeg
+            zip -r runs/detect-result.zip runs/detect
+      - store_artifacts:
+          path: yolov5/runs/detect-result.zip
+          destination: detect-result_on_<< parameters.test_env >>.zip
 
 jobs:
   train_to_test_on_gpu:
@@ -74,6 +91,8 @@ jobs:
       - load_maskdataset
       - train_with_maskdataset:
           train_env: "runner"
+      - test_mask_detection:
+          test_env: "runner"
 
 workflows:
   version: 2
