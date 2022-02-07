@@ -31,9 +31,9 @@ commands:
            cd yolov5
             python train.py --img 416 --data ../MaskDataSet/data.yaml --cfg yolov5s.yaml --weights yolov5s.pt --batch-size 2 --epochs 300
             cd ..
-      store_artifacts:
-        path: yolov5/runs/result.zip
-        destination: result_on_<< parameters.train_env >>.zip
+      - store_artifacts:
+          path: yolov5/runs/result.zip
+          destination: result_on_<< parameters.train_env >>.zip
 
 jobs:
   train_to_test_on_gpu:
