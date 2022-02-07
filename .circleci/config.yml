@@ -20,7 +20,7 @@ commands:
             cp ../MaskDataSet/data.yaml .
             cd ..          
   train_with_maskdataset:
-    descritpion: xxx
+    description: xxx
     parameters:
       train_env:
         type: string
