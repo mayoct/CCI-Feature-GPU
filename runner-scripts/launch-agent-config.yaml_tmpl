@@ -1,0 +1,8 @@
+# copy this file to /opt/circleci/launch-agent-config.yaml
+api:
+  auth_token: [TOKEN]
+runner:
+  name: runner-rog
+  command_prefix: ["sudo", "-niHu", "circleci", "--"]
+  working_directory: /opt/circleci/workdir/%s
+  cleanup_working_directory: true
