@@ -56,9 +56,26 @@ commands:
           name: Test mask detection
           command: |
             cd yolov5
-            python3 detect.py --weights ./runs/train/exp/weights/best.pt --img 640 --conf 0.2 --source ../images/face_w_mask3.jpg
-            python3 detect.py --weights ./runs/train/exp/weights/best.pt --img 640 --conf 0.2 --source ../images/face_w_mask4.jpg
-            python3 detect.py --weights ./runs/train/exp/weights/best.pt --img 640 --conf 0.2 --source ../images/face_wo_mask2.jpg
+            # Original test data
+            python3 detect.py --weights ./runs/train/exp/weights/best.pt --conf 0.85 --source ../MaskDataSet/test/images/0_Concern-In-China-As-Mystery-Virus-Spreads_jpg.rf.3135dfc5feab288d76a4ccfd22dfc5bf.jpg
+            python3 detect.py --weights ./runs/train/exp/weights/best.pt --conf 0.85 --source ../MaskDataSet/test/images/1224331650_g_400-w_g_jpg.rf.b816f49e2d84044fc997a8cbd55c347d.jpg
+            python3 detect.py --weights ./runs/train/exp/weights/best.pt --conf 0.85 --source ../MaskDataSet/test/images/126202-untitled-design-13_jpg.rf.56b50d413464989bb2232448a8fbb915.jpg
+            python3 detect.py --weights ./runs/train/exp/weights/best.pt --conf 0.85 --source ../MaskDataSet/test/images/1288126-10255706714jpg_jpg.rf.95f7324cbfd48e0386e0660b5e932223.jpg
+            python3 detect.py --weights ./runs/train/exp/weights/best.pt --conf 0.85 --source ../MaskDataSet/test/images/15391513324714o1n0r10n6_jpg.rf.a91fbc7be8a94ed3c48d2e4b35bd53bb.jpg
+            python3 detect.py --weights ./runs/train/exp/weights/best.pt --conf 0.85 --source ../MaskDataSet/test/images/15391513329330sooq10859_jpg.rf.89c8524c2096175fa2c728e5d73f1c28.jpg
+            python3 detect.py --weights ./runs/train/exp/weights/best.pt --conf 0.85 --source ../MaskDataSet/test/images/1579924271_jpg.rf.be5b27c2b2801bccc191e6dbd9bfccca.jpg
+            python3 detect.py --weights ./runs/train/exp/weights/best.pt --conf 0.85 --source ../MaskDataSet/test/images/RTX7CCFN_jpg.rf.66ed5c5054f30d933d19ab3d56ace004.jpg
+            python3 detect.py --weights ./runs/train/exp/weights/best.pt --conf 0.85 --source ../MaskDataSet/test/images/phplpE73q_jpg.rf.bd81cab9f8ff2674ce2e58278f7d37fa.jpg
+            python3 detect.py --weights ./runs/train/exp/weights/best.pt --conf 0.85 --source ../MaskDataSet/test/images/r1p00017o8171pnq407_jpg.rf.6fd25b7219a249e97f54fcabf2b52726.jpg
+            python3 detect.py --weights ./runs/train/exp/weights/best.pt --conf 0.85 --source ../MaskDataSet/test/images/shutterstock_1627199179_jpg.rf.8432d033a37b3d142ec4ffcede508c7d.jpg
+            python3 detect.py --weights ./runs/train/exp/weights/best.pt --conf 0.85 --source ../MaskDataSet/test/images/the-first-day-of-wuhan-s-closure-some-people-fled-some-panicked_jpg.rf.0302fefb0879eb37736a704ca5d070ff.jpg
+            python3 detect.py --weights ./runs/train/exp/weights/best.pt --conf 0.85 --source ../MaskDataSet/test/images/w1240-p16x9-0e48e0098f6e832f27d8b581b33bbc72b9967a63_jpg.rf.34ed1e8f70eebdabaf43ab9d40dc1c9b.jpg
+            python3 detect.py --weights ./runs/train/exp/weights/best.pt --conf 0.85 --source ../MaskDataSet/test/images/w1240-p16x9-2019-10-04t075956z_1862636027_rc15d4d49d00_rtrmadp_3_hongkong-protests_jpg.rf.061f2c7f7d17a0b472510eadb717a0b9.jpg
+            python3 detect.py --weights ./runs/train/exp/weights/best.pt --conf 0.85 --source ../MaskDataSet/test/images/w1240-p16x9-fa978043deff83fed485af12d16e39c61398fc30_jpg.rf.185d01b7e55e049c6661b8ecd49679fc.jpg
+            # Added test data
+            python3 detect.py --weights ./runs/train/exp/weights/best.pt --conf 0.85 --source ../images/face_w_mask3.jpg
+            python3 detect.py --weights ./runs/train/exp/weights/best.pt --conf 0.85 --source ../images/face_w_mask4.jpg
+            python3 detect.py --weights ./runs/train/exp/weights/best.pt --conf 0.85 --source ../images/face_wo_mask2.jpg
             zip -r runs/detect-result.zip runs/detect
       - store_artifacts:
           path: yolov5/runs/detect-result.zip
