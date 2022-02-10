@@ -41,7 +41,7 @@ commands:
           name: Train with MaskDataSet
           command: |
             cd yolov5
-            python3 train.py --img 416 --data ../MaskDataSet/data.yaml --cfg yolov5s.yaml --weights yolov5s.pt --batch-size 1 --epochs 300
+            python3 train.py --img 416 --data ../MaskDataSet/data.yaml --cfg yolov5s.yaml --weights yolov5s.pt --batch-size 8 --epochs 300
             zip -r runs/train-result.zip runs/train/exp/weights
             cd ..
       - store_artifacts:
@@ -100,5 +100,5 @@ workflows:
   version: 2
   workflow:
     jobs:
-      - train_to_test_on_gpu
+#      - train_to_test_on_gpu
       - train_to_test_on_runner
