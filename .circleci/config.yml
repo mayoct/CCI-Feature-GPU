@@ -41,7 +41,7 @@ commands:
           name: Train with MaskDataSet
           command: |
             cd yolov5
-            python3 train.py --img 416 --data ../MaskDataSet/data.yaml --cfg yolov5s.yaml --weights yolov5s.pt --batch-size 16 --epochs 300
+            python3 train.py --img 416 --data ../MaskDataSet/data.yaml --cfg yolov5m.yaml --weights yolov5m.pt --batch-size 16 --epochs 300
             zip -r runs/train-result.zip runs/train/exp/weights
             cd ..
       - store_artifacts:
@@ -56,8 +56,8 @@ commands:
           name: Test mask detection
           command: |
             cd yolov5
-            python3 detect.py --weights ./runs/train/exp/weights/best.pt --conf 0.25 --save-txt --save-conf --source ../MaskDataSet/test/images
-            python3 detect.py --weights ./runs/train/exp/weights/best.pt --conf 0.25 --save-txt --save-conf --source ../images
+            python3 detect.py --weights ./runs/train/exp/weights/best.pt --conf 0.75 --save-txt --save-conf --source ../MaskDataSet/test/images
+            python3 detect.py --weights ./runs/train/exp/weights/best.pt --conf 0.75 --save-txt --save-conf --source ../images
             zip -r runs/detect-result.zip runs/detect
       - store_artifacts:
           path: yolov5/runs/detect-result.zip
