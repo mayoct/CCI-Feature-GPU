@@ -3,3 +3,4 @@ val:   ../MaskDataSet/valid/images
 
 nc: 2
 names: ['mask', 'no-mask']
+

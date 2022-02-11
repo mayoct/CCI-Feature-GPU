@@ -27,7 +27,7 @@ commands:
           command: |
             mkdir MaskDataSet
             cd MaskDataSet
-            curl -L "https://public.roboflow.com/ds/9rYgiWaqnY?key=$ROBOFLOW_KEY" > roboflow.zip
+            curl -L "https://public.roboflow.com/ds/ufHXPvJekp?key=$ROBOFLOW_KEY" > roboflow.zip
             unzip -n roboflow.zip
             rm roboflow.zip
             \cp -fv  ../data.yaml .
@@ -41,7 +41,7 @@ commands:
           name: Train with MaskDataSet
           command: |
             cd yolov5
-            python3 train.py --data ../MaskDataSet/data.yaml --cfg yolov5s.yaml --weights yolov5s.pt --batch-size 6 --epochs 500
+            python3 train.py --img 416 --data ../MaskDataSet/data.yaml --cfg yolov5s.yaml --weights yolov5s.pt --batch-size 16 --epochs 300
             zip -r runs/train-result.zip runs/train/exp/weights
             cd ..
       - store_artifacts:
@@ -56,8 +56,8 @@ commands:
           name: Test mask detection
           command: |
             cd yolov5
-            python3 detect.py --weights ./runs/train/exp/weights/best.pt --conf 0.4 --save-txt --source ../MaskDataSet/test/images
-            python3 detect.py --weights ./runs/train/exp/weights/best.pt --conf 0.4 --save-txt --source ../images
+            python3 detect.py --weights ./runs/train/exp/weights/best.pt --conf 0.25 --save-txt --save-conf --source ../MaskDataSet/test/images
+            python3 detect.py --weights ./runs/train/exp/weights/best.pt --conf 0.25 --save-txt --save-conf --source ../images
             zip -r runs/detect-result.zip runs/detect
       - store_artifacts:
           path: yolov5/runs/detect-result.zip
