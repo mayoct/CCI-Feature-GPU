@@ -1,5 +1,10 @@
 version: 2.1
 
+parameters:
+  run_on_runner:
+    type: boolean
+    default: false
+
 commands:
   clone_yolov5:
     steps:
@@ -7,8 +12,6 @@ commands:
           name: Clone YOLOv5 from github
           command: |
             git clone http://github.com/ultralytics/yolov5
-#      - restore_cache:
-#          key: yolov5-requirements-{{ .Branch }}-{{ checksum "yolov5/requirements.txt" }}
       - run:
           name: Load PyTorch 1.10.2 and required pip libraries
           command: |          
@@ -16,10 +19,6 @@ commands:
             pip3 install torch==1.10.2+cu113 torchvision==0.11.3+cu113 torchaudio==0.10.2+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
             pip3 install -r requirements.txt
             cd ..
-#      - save_cache:
-#          key: yolov5-requirements-{{ .Branch }}-{{ checksum "yolov5/requirements.txt" }}
-#          paths:
-#            - "~/.cache/pip"                
   load_maskdataset:
     steps:
       - run:
@@ -82,7 +81,7 @@ jobs:
 
   train_to_test_on_runner:
     machine: true
-    resource_class: mayoct/runner-rog
+    resource_class: mayoct/runner-x13
     steps:
       - checkout
       - run:
@@ -96,8 +95,12 @@ jobs:
           test_env: "runner"
 
 workflows:
-  version: 2
-  workflow:
+  version: 2  
+  run_on_cloud:
+    unless: << pipeline.parameters.run_on_runner >>
     jobs:
       - train_to_test_on_gpu
+  run_on_runner:
+    when: << pipeline.parameters.run_on_runner >>
+    jobs:
       - train_to_test_on_runner
