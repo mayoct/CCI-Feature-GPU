@@ -81,7 +81,7 @@ jobs:
 
   train_to_test_on_runner:
     machine: true
-    resource_class: mayoct/runner-x13
+    resource_class: mayoct/runner-sls
     steps:
       - checkout
       - run:
