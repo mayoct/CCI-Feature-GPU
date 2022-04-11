@@ -26,7 +26,7 @@ commands:
           command: |
             mkdir MaskDataSet
             cd MaskDataSet
-            curl -L "https://public.roboflow.com/ds/9rYgiWaqnY?key=$ROBOFLOW_KEY" > roboflow.zip
+            curl -L "https://public.roboflow.com/ds/ufHXPvJekp?key=$ROBOFLOW_KEY" > roboflow.zip
             unzip -n roboflow.zip
             rm roboflow.zip
             \cp -fv  ../data.yaml .
